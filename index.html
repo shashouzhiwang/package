@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Browserify</title>
+    <style>input{width:50px;}</style>
+</head>
+<body>
+<h1>Browserify</h1>
+<!--<script src="index.js"></script>-->
+<!--<script src="multiply.js"></script>-->
+<!--<script src="square.js"></script>-->
+<!--<script src="x.js"></script>-->
+
+<script src="bower_components/jquery/dist/jquery.min.js"></script>
+<script src="bower_components/layer/build/layer.js"></script>
+<script src="src/config.js"></script>
+<script src="build/js/load.js"></script>
+<script src="src/model/model.js"></script>
+<script src="src/mapping/mapping.js"></script>
+<script>
+
+//    consumerModel.confirm({
+////        template:"<div>eeeeee</div>",
+//        defaultContent:"rrrrrrrrrr",
+//        templateUrl:"./src/model/model.html",
+//        layer:{
+//            comfireCb:function(){
+//                alert('comfireCb');
+//            },
+//            cancel:function(){
+//                alert('cancelCb');
+//            }
+//        }
+//    });
+
+//consumerModel.msg({
+//    content:'加载中..',
+//    time:9000
+//});
+//consumerModel.loading();
+//consumerModel.loadingClose();
+
+
+    asynLoad.ajax({
+        success:function(data, status, requestCode, response, xhr)
+        {
+//                    alert('success---');
+         },
+        data:{"test":'uu',para:'rr'},
+        url:'api/bacInfo/mapping/serviceStatus'
+    });
+
+//    mapping.init();
+
+
+</script>
+</body>
+</html>
