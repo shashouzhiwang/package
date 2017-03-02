@@ -1,0 +1,25 @@
+<style>
+    .clearfix:after{
+        clear:both;
+    }
+    .consumerModel .consumerModel_content{
+        text-align: center;padding:35px 0;
+    }
+    .consumerModel .consumerModel_btn{
+        height: 40px;line-height: 40px;border-top:1px solid #ddd;
+    }
+    .consumerModel .consumerModel_btn .btn{
+        float:left;width: 50%;text-align: center;cursor:pointer;
+    }
+</style>
+<div class="consumerModel">
+    <div class="consumerModel_content">
+        <div>我是测试我是测试</div>
+    </div>
+    <div class="clearfix consumerModel_btn">
+        <div class="btn" onclick="consumerModel.confirmBtn()">
+            <div style="border-right:1px solid #ddd;">确定</div>
+        </div>
+        <div class="btn" onclick="consumerModel.cancelBtn()">取消</div>
+    </div>
+</div>
