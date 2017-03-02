@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>package</title>
+    <style>input{width:50px;}
+    .invaild{
+        color:red;
+        border:1px solid red;
+    }
+    </style>
+</head>
+<body>
+<h1>package</h1>
+
+<form name="test">
+    <input type="text" required value="22" pattern="" />
+    <input type="text"  value="" pattern="^(((13[0-9]{1})|(15[0-9]{1})|(18[0-9]{1}))+\d{8})$" />
+    <input type="text" required pattern="" />
+</form>
+<div onclick="submit()">提交</div>
+
+<script src="../bower_components/jquery/dist/jquery.min.js"></script>
+<script src="../bower_components/layer/build/layer.js"></script>
+<script src="../config.js"></script>
+<script src="main/main.min.js"></script>
+<script>
+
+function submit(){
+    formCheck.check($('form'));
+}
+
+//    consumerModel.confirm({
+////        template:"<div>eeeeee</div>",
+//        defaultContent:"rrrrrrrrrr",
+//        templateUrl:"./src/model/model.html",
+//        layer:{
+//            comfireCb:function(){
+//                alert('comfireCb');
+//            },
+//            cancel:function(){
+//                alert('cancelCb');
+//            }
+//        }
+//    });
+
+//consumerModel.msg({
+//    content:'加载中..',
+//    time:9000
+//});
+//consumerModel.loading();
+//consumerModel.loadingClose();
+
+//    asynLoad.ajax({
+//        success:function(data, status, requestCode, response, xhr)
+//        {
+////                    alert('success---');
+//         },
+//        data:{"test":'uu',para:'rr'},
+//        url:'api/bacInfo/mapping/serviceStatus'
+//    });
+
+
+var data = {
+    data:{
+        data:[
+            {
+                data:[
+                    {
+                        "topicId": "topic13",
+                        "topicType": "disorder",
+                        "serviceStatus": "inactive",
+                        "createTime": "2017-02-17T10:45:05.434+0800"
+                    },
+                    {
+                        "topicId": "333",
+                        "topicType": "order",
+                        "serviceStatus": "active",
+                        "createTime": "2017-02-17T16:19:02.606+0800"
+                    },
+                    {
+                        "topicId": "topic16",
+                        "topicType": "disorder",
+                        "serviceStatus": "active",
+                        "createTime": "2017-02-20T15:12:15.197+0800"
+                    },
+                    {
+                        "topicId": "test",
+                        "topicType": "order",
+                        "serviceStatus": "inactive",
+                        "createTime": "2017-02-20T17:42:13.503+0800"
+                    }
+                ]
+            }
+        ]
+    }
+};
+
+mapping.matchCode('topicType',data,function(data){
+//    alert(JSON.stringify(data));
+});
+
+
+
+</script>
+</body>
+</html>

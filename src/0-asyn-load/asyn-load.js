@@ -12,7 +12,7 @@ var asynLoad = {};
     context.defOption = {
         url:'http://192.168.1.108:8083/guest/api/table.php?page=1',
         asyn: true,
-        timeout: 2000,
+        timeout: 10000,
         type: "POST",
         data:{
             accessToken:localStorage.accessToken
@@ -28,7 +28,8 @@ var asynLoad = {};
         beforeSend:function(data){
         },
         complete:function(data, status, requestCode){
-            consumerModel.loadingClose();
+            //consumerModel.loadingClose();
+            setTimeout(function(){ consumerModel.loadingClose(); }, 100);
             //alert('complete');
         }
     };
@@ -67,15 +68,21 @@ var asynLoad = {};
                     time:3000
                 });
             }
-            setTimeout(function(){ consumerModel.loadingClose(); }, 100);
             error(data,status,requestCode);
         }
     };
 
+
     context.ajax = function(opt){
         context.init(opt);
-        $.ajax(context.defOption);
+        $.ajax(context.defOption).then(function(data){
+            //alert(JSON.stringify(data));
+            if(context.defOption.cb){
+                context.defOption.cb(data);
+            }
+        });
     };
+
 
 })(asynLoad);
 
