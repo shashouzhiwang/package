@@ -5,11 +5,12 @@ var mapping = {};
 (function(context){
     context.matchCode = function (lookupTypeArray,needMatchData,cb){
         return asynLoad.ajax({
-            "url": "../test-data/code.json",
+            //"url": "../test-data/code.json",
             type:"GET",
             "Content-Type":'application/json',
             dataType:'json',
-            //"url": "api/bacInfo/mapping/"+lookupTypeArray,
+            forbidBindingKey:true,
+            "url": "api/bacInfo/mapping/"+lookupTypeArray,
             "data": {
             },
             success:function(data){
@@ -24,12 +25,12 @@ var mapping = {};
     };
 
     context.replaceCode = function(lookupType,codeArray,needMatchData){
-        if(judgeObject(needMatchData) == 'Array'){
+        if(context.judgeObject(needMatchData) == 'Array'){
             $.each(needMatchData,function(index,item){
                 traverseNeedMatch(lookupType,codeArray,item);
             })
         }else{
-            if(judgeObject(needMatchData) == 'Object'){
+            if(context.judgeObject(needMatchData) == 'Object'){
                 for(var key in needMatchData){
                     traverseNeedMatch(lookupType,codeArray,needMatchData[key]);
                 }
@@ -39,7 +40,7 @@ var mapping = {};
         return needMatchData;
     };
 
-    function judgeObject(needMatchData){
+    context.judgeObject = function(needMatchData){
         if(typeof(needMatchData) == 'object'){
             if(typeof needMatchData.length == 'number'){
                 return 'Array';
@@ -55,7 +56,7 @@ var mapping = {};
      *
      */
     function traverseNeedMatch(lookupType,codeArray,needMatchData){
-        if(judgeObject(needMatchData) == 'Array'){
+        if(context.judgeObject(needMatchData) == 'Array'){
             context.replaceCode(lookupType,codeArray,needMatchData);
         }else{
             traverseBacInfo(lookupType,needMatchData,codeArray);
@@ -72,7 +73,7 @@ var mapping = {};
      */
     function traverseBacInfo(lookupType,json,codeArray){
         for(key in json){
-            if(judgeObject(json[key]) != 'NAN'){
+            if(context.judgeObject(json[key]) != 'NAN'){
                 context.replaceCode(lookupType,codeArray,json[key]);
             }
             if(key == lookupType){

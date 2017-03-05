@@ -2,7 +2,7 @@
  * Created by Loki.Luo on 2017/3/2.
  */
 
-var consumerModel = {};
+var dialog = {};
 (function(context){
 
     /**
@@ -45,6 +45,7 @@ var consumerModel = {};
                 asynLoad.ajax(
                     {   url:data.templateUrl,
                         type: "GET",
+                        template:true,
                         loading:false,
                         dataType:'html',
                         success:function(res){
@@ -66,7 +67,6 @@ var consumerModel = {};
     context.confirm = function(data){
         context.confirmInit(data);
     };
-
     context.loading = function(data){
         data = $.extend(
             {
@@ -99,7 +99,7 @@ var consumerModel = {};
     };
 
 
-})(consumerModel);
+})(dialog);
 
 
 

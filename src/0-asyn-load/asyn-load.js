@@ -10,13 +10,13 @@
 var asynLoad = {};
 (function(context){
     context.defOption = {
-        url:'http://192.168.1.108:8083/guest/api/table.php?page=1',
+        url:'',
         asyn: true,
-        timeout: 10000,
-        type: "POST",
         data:{
             accessToken:localStorage.accessToken
         },
+        bindingKey:'key',
+        forbidBindingKey:false,
         loading:true,
         dataType: "json",
         cache: false,
@@ -29,18 +29,19 @@ var asynLoad = {};
         },
         complete:function(data, status, requestCode){
             //consumerModel.loadingClose();
-            setTimeout(function(){ consumerModel.loadingClose(); }, 100);
+            setTimeout(function(){ dialog.loadingClose(); }, 100);
             //alert('complete');
         }
     };
 
     context.init = function(opt){
-        opt.url = config.DOMAIN + opt.url;
+        //判断是否是做测试
+        opt = context.testLoad(opt);
         //alert(JSON.stringify(opt));
         opt.data = $.extend(context.defOption.data,opt.data);
         context.defOption = $.extend(context.defOption,opt);
         if(context.defOption.loading)
-            consumerModel.loading();
+            dialog.loading();
 
         context.successGlobalCb();
         context.errorGlobalCb();
@@ -57,13 +58,13 @@ var asynLoad = {};
         var error = context.defOption.error;
         context.defOption.error = function(data, status, requestCode){
             if(status=='error'){
-                consumerModel.msg({
+                dialog.msg({
                     content:'系统异常',
                     time:3000
                 });
             }
             if(status == 'timeout'){
-                consumerModel.msg({
+                dialog.msg({
                     content:'请求超时',
                     time:3000
                 });
@@ -72,6 +73,18 @@ var asynLoad = {};
         }
     };
 
+    context.testLoad = function(opt){
+        if(!opt.template){
+            if(!config.TEST){
+                opt.url = config.DOMAIN + opt.url;
+            }else{
+                opt.url = opt.localUrl;
+            }
+            opt.type = config.REQUIRT_STYLE;
+        }
+        opt.timeout = config.TIMEOUT;
+        return opt;
+    };
 
     context.ajax = function(opt){
         context.init(opt);
@@ -79,6 +92,13 @@ var asynLoad = {};
             //alert(JSON.stringify(data));
             if(context.defOption.cb){
                 context.defOption.cb(data);
+            }
+            if(data.status == 'SUCCESS' && !context.defOption.forbidBindingKey){
+                //format.getAsynData(data.data);
+            }
+            //恢复forbidBindingKey为false
+            if(context.defOption.forbidBindingKey){
+                context.defOption.forbidBindingKey = false;
             }
         });
     };

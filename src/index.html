@@ -19,6 +19,22 @@
 </form>
 <div onclick="submit()">提交</div>
 
+<h3>format-transfrom</h3>
+
+<div >
+    <span key="$time yyyy-MM-dd hh:mm:ss | time"></span>
+    <div key="data.lang">dd</div>
+</div>
+
+<div key="$currency 2 ￥ | currency"></div>
+<div key="data.time.test">dd</div>
+<div key="data.test">dd</div>
+
+<div id="search">
+
+    <!---->
+</div>
+
 <script src="../bower_components/jquery/dist/jquery.min.js"></script>
 <script src="../bower_components/layer/build/layer.js"></script>
 <script src="../config.js"></script>
@@ -29,10 +45,10 @@ function submit(){
     formCheck.check($('form'));
 }
 
-//    consumerModel.confirm({
+//    dialog.confirm({
 ////        template:"<div>eeeeee</div>",
 //        defaultContent:"rrrrrrrrrr",
-//        templateUrl:"./src/model/model.html",
+//        templateUrl:"./dialog/dialog.html",
 //        layer:{
 //            comfireCb:function(){
 //                alert('comfireCb');
@@ -50,14 +66,28 @@ function submit(){
 //consumerModel.loading();
 //consumerModel.loadingClose();
 
-//    asynLoad.ajax({
-//        success:function(data, status, requestCode, response, xhr)
-//        {
-////                    alert('success---');
-//         },
-//        data:{"test":'uu',para:'rr'},
-//        url:'api/bacInfo/mapping/serviceStatus'
-//    });
+    asynLoad.ajax({
+        success:function(data, status, requestCode)
+        {
+            data.data = {
+              time:1488525824,
+              currency:"22",
+                data:{
+                    lang:"中文",
+                    time:{
+                        test:"ceshi"
+                    },
+                    test:"测试"
+                }
+            };
+
+//           alert('success---');
+            format.binding(data.data);
+         },
+        data:{"test":'uu',para:'rr'},
+        url:'api/bacInfo/mapping/serviceStatus',
+        localUrl:'../test-data/topic-list.json'
+    });
 
 
 var data = {
@@ -99,6 +129,13 @@ mapping.matchCode('topicType',data,function(data){
 //    alert(JSON.stringify(data));
 });
 
+
+new dropDown({
+    warp:$('#search'),
+    asynRequire:function(val){
+        console.log(val);
+    }
+});
 
 
 </script>
