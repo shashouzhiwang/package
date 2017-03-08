@@ -31,12 +31,13 @@
                                     "</a>"+
                                 "</li>"+
                             "</ul>"+
-                            "当前第<input type='text' />页"+
+                            "当前第<input class='index' type='text' value="+this.default.curPage+" />页"+
                             "<span>共有<span>"+this.default.data.totalRows+"</span>条，每页显示<span>"+this.default.data.defaultSize+"</span>条</span>"+
                         "</nav>";
             this.default.warp.html(str);
             this.$li_first = this.default.warp.find('li').first();
             this.$li_last = this.default.warp.find('li').last();
+            this.$input = this.default.warp.find('.index');
             if(this.default.data.pageSize>1){
                 this.$li_last.addClass('active');
             }
@@ -54,6 +55,14 @@
                     }else{
                         self.indexPage($(this).find('a').html());
                     }
+                }
+            });
+            this.$input.on('keyup',function(e){
+                if(e.which == 13){
+                    var val = parseInt($(this).val());
+                    if(val == self.default.curPage || val > self.default.data.pageSize || val < 1)
+                    return;
+                    self.indexPage(val);
                 }
             })
         },
@@ -86,12 +95,12 @@
         indexPage:function(num){
             this.activeCurPage(num);
             this.default.curPage = num;
-            if(num<this.default.data.pageSize && (this.default.endPage-num)<Math.floor(this.default.showNum/2)){
+            if(num<=this.default.data.pageSize && (this.default.endPage-num)<Math.floor(this.default.showNum/2)){
                 var starPage = num-Math.floor(this.default.showNum/2) >=1 ? num-Math.floor(this.default.showNum/2) :1;
                 this.default.endPage  = num-Math.floor(this.default.showNum/2) + this.default.showNum - 1;
                 this.buildPageList(starPage);
             }
-            if(num >1 && (num - this.default.startPage) >=0 && (num - this.default.startPage)<Math.floor(this.default.showNum/2)){
+            if(num >=1 && (num - this.default.startPage)<Math.floor(this.default.showNum/2)){
                 var startPage = num-Math.floor(this.default.showNum/2) >= 1 ? num-Math.floor(this.default.showNum/2) :1;
                 this.default.endPage  = startPage + this.default.showNum - 1;
                 this.buildPageList(startPage);

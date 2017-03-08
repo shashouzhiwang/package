@@ -11,6 +11,8 @@
 
      .pageNav ul li{
          list-style:none;width:40px;display: inline-block;border:1px solid #ccc;height:40px;line-height: 40px;text-align: center;cursor:pointer;
+         -moz-user-select:none;
+         -webkit-user-select:none;
      }
     .pageNav ul li.active{
         border:1px solid red;background: red;color:white;
@@ -55,14 +57,14 @@
     var pageData = {
         totalRows:16,
         defaultSize:10,
-        pageSize:10
+        pageSize:16
     };
     new page({
         warp:$('#page'),
         data:pageData,
         showNum:5,
         callBack:function(index){
-            alert(index);
+            console.log(index);
         }
     });
 

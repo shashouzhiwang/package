@@ -10,7 +10,7 @@ function pageNav_demo(pageData,showNum){
     var pageData = {
         totalRows:16,
         defaultSize:10,
-        pageSize:3,
+        pageSize:16,
         callBack:function(index){
             alert(index);
         }
