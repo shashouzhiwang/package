@@ -9,32 +9,32 @@
  *  **/
 var asynLoad = {};
 (function(context){
-    context.defOption = {
-        url:'',
-        asyn: true,
-        data:{
-            accessToken:localStorage.accessToken
-        },
-        bindingKey:'key',
-        forbidBindingKey:false,
-        loading:true,
-        dataType: "json",
-        cache: false,
-        success:function(data, status, requestCode){
-        },
-        error:function(data, status, requestCode){
-            //console.log(data,status,requestCode);
-        },
-        beforeSend:function(data){
-        },
-        complete:function(data, status, requestCode){
-            //consumerModel.loadingClose();
-            setTimeout(function(){ dialog.loadingClose(); }, 100);
-            //alert('complete');
-        }
-    };
-
     context.init = function(opt){
+        context.defOption = {
+            url:'',
+            asyn: true,
+            data:{
+                accessToken:localStorage.accessToken
+            },
+            bindingKey:'key',
+            forbidBindingKey:false,
+            loading:true,
+            dataType: "json",
+            cache: false,
+            success:function(data, status, requestCode){
+            },
+            error:function(data, status, requestCode){
+                //console.log(data,status,requestCode);
+            },
+            beforeSend:function(data){
+            },
+            complete:function(data, status, requestCode){
+                //consumerModel.loadingClose();
+                setTimeout(function(){ dialog.loadingClose(); }, 100);
+                //alert('complete');
+            }
+        };
+
         //判断是否是做测试
         opt = context.testLoad(opt);
         //alert(JSON.stringify(opt));

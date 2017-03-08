@@ -1,23 +1,32 @@
 /**
  * Created by Loki.Luo on 2017/3/2.
  */
-
 var dialog = {};
-(function(context){
-
     /**
+     * @namespace dialog.
+     * @description dialog默认参数列表
+     * @param {closeBtn} 是否包含关闭按钮
+     * @param {area} 弹窗的宽高
+     * @param {type} 动画类型
+     * @param {shade} 遮罩透明度 0-1
      *
-     * @param data
-     * {
-     * template:
-     * templateUrl
-     * layer:{
-     *          type:
-     *          shade:
-     *          title
-     *      }
-     * }
+     *
      */
+
+/**
+ *
+ * @description dialog默认参数列表
+ * @param {closeBtn} 是否包含关闭按钮
+ * @param {area} 弹窗的宽高
+ * @param {type} 动画类型
+ * @param {shade} 遮罩透明度 0-1
+ *
+ *
+ */
+
+(
+    function(context){
+
     context.defConfirmOption = {
         closeBtn: 0,
         shadeClose: true,
@@ -30,6 +39,7 @@ var dialog = {};
             //layer.msg('捕获就是从页面已经存在的元素上，包裹layer的结构', {time: 5000, icon:6});
         }
     };
+
     context.layerId = null;
     context.loadingId = null;
     context.confirmInit = function(data){
@@ -67,6 +77,10 @@ var dialog = {};
     context.confirm = function(data){
         context.confirmInit(data);
     };
+    /**
+     *
+     * @param data
+     */
     context.loading = function(data){
         data = $.extend(
             {
@@ -77,7 +91,10 @@ var dialog = {};
     context.loadingClose = function(){
         layer.close(context.loadingId);
     };
-
+    /**
+     *
+     * @param data
+     */
     context.msg = function(data){
         data = $.extend(
             {

@@ -2,21 +2,35 @@
 <html>
 <head>
     <title>package</title>
+    <link rel="stylesheet" href="skin/default/font/iconfont.css">
     <style>input{width:50px;}
     .invaild{
         color:red;
         border:1px solid red;
     }
+
+     .pageNav ul li{
+         list-style:none;width:40px;display: inline-block;border:1px solid #ccc;height:40px;line-height: 40px;text-align: center;cursor:pointer;
+     }
+    .pageNav ul li.active{
+        border:1px solid red;background: red;color:white;
+    }
     </style>
 </head>
 <body>
 <h1>package</h1>
-
 <form name="test">
     <input type="text" required value="22" pattern="" />
     <input type="text"  value="" pattern="^(((13[0-9]{1})|(15[0-9]{1})|(18[0-9]{1}))+\d{8})$" />
     <input type="text" required pattern="" />
 </form>
+
+<div>
+    <div collect="test.name">sss</div>
+    <div collect="collect.name">ccc</div>
+    <div collect="collect.lang.test">vvv</div>
+</div>
+
 <div onclick="submit()">提交</div>
 
 <h3>format-transfrom</h3>
@@ -30,19 +44,33 @@
 <div key="data.time.test">dd</div>
 <div key="data.test">dd</div>
 
-<div id="search">
-
-    <!---->
-</div>
+<div id="search"></div>
+<div id="page"></div>
 
 <script src="../bower_components/jquery/dist/jquery.min.js"></script>
 <script src="../bower_components/layer/build/layer.js"></script>
 <script src="../config.js"></script>
 <script src="main/main.min.js"></script>
 <script>
+    var pageData = {
+        totalRows:16,
+        defaultSize:10,
+        pageSize:10
+    };
+    new page({
+        warp:$('#page'),
+        data:pageData,
+        showNum:5,
+        callBack:function(index){
+            alert(index);
+        }
+    });
+
 
 function submit(){
-    formCheck.check($('form'));
+//    formCheck.check($('form'));
+    var test = {};
+    collect.collectData('collect',test)
 }
 
 //    dialog.confirm({
@@ -129,11 +157,14 @@ mapping.matchCode('topicType',data,function(data){
 //    alert(JSON.stringify(data));
 });
 
-
 new dropDown({
     warp:$('#search'),
-    asynRequire:function(val){
-        console.log(val);
+    submitParam:'param',
+    getListParam:'topicId',
+    requireParam:{
+        url:'api/bacInfo/mapping/serviceStatus',
+        localUrl:'../test-data/topic-list.json',
+        loading:false
     }
 });
 

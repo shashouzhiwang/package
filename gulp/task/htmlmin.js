@@ -7,12 +7,12 @@ var gulp = require('gulp');
 
 
 var htmlOption = {
-    removeComments:true,
-    collapseWhitespace:true,
+    removeComments:false,
+    collapseWhitespace:false,
     removeEmptyAttributes: true,
     removeScriptTypeAttributes: true,
     removeStyleLinkTypeAttributes: true,
-    minifyJS: true,
+    minifyJS: false,
     minifyCSS: true
 };
 //gulp.task('htmlmin',function(){
