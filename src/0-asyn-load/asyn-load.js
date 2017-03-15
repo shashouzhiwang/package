@@ -20,6 +20,7 @@ var asynLoad = {};
             forbidBindingKey:false,
             loading:true,
             dataType: "json",
+            // contentType:'application/json',
             cache: false,
             success:function(data, status, requestCode){
             },
@@ -40,6 +41,7 @@ var asynLoad = {};
         //alert(JSON.stringify(opt));
         opt.data = $.extend(context.defOption.data,opt.data);
         context.defOption = $.extend(context.defOption,opt);
+        opt.url = context.temUrl;
         if(context.defOption.loading)
             dialog.loading();
 
@@ -76,6 +78,7 @@ var asynLoad = {};
     context.testLoad = function(opt){
         if(!opt.template){
             if(!config.TEST){
+                context.temUrl = opt.url;
                 opt.url = config.DOMAIN + opt.url;
             }else{
                 opt.url = opt.localUrl;
@@ -88,6 +91,7 @@ var asynLoad = {};
 
     context.ajax = function(opt){
         context.init(opt);
+        context.defOption.data = JSON.stringify(context.defOption.data);
         $.ajax(context.defOption).then(function(data){
             //alert(JSON.stringify(data));
             if(context.defOption.cb){

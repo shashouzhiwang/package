@@ -8,6 +8,9 @@
         color:red;
         border:1px solid red;
     }
+    .search_content .active{
+        background: red;
+    }
 
      .pageNav ul li{
          list-style:none;width:40px;display: inline-block;border:1px solid #ccc;height:40px;line-height: 40px;text-align: center;cursor:pointer;
@@ -96,28 +99,52 @@ function submit(){
 //consumerModel.loading();
 //consumerModel.loadingClose();
 
-    asynLoad.ajax({
-        success:function(data, status, requestCode)
-        {
-            data.data = {
-              time:1488525824,
-              currency:"22",
-                data:{
-                    lang:"中文",
-                    time:{
-                        test:"ceshi"
-                    },
-                    test:"测试"
-                }
-            };
 
-//           alert('success---');
-            format.binding(data.data);
-         },
-        data:{"test":'uu',para:'rr'},
-        url:'api/bacInfo/mapping/serviceStatus',
-        localUrl:'../test-data/topic-list.json'
-    });
+
+
+//asynLoad.ajax({
+//        data:{
+//            parameter: {
+//                orderNo: "SDVSDF1111",
+//                officeCode: "officeCode",
+//                dateBegin: "1970-10-10",
+//                transactionType: "DIN"
+//            },
+//            pagingInfo: {
+//                pageSize: "1",
+//                currentPage: "1",
+//                totalRows: "1"
+//            }
+//        },
+//        contentType:"application/json",
+////        url:'api/bacInfo/mapping/serviceStatus',
+//        type:'POST',
+//        dataType:"json",
+////    processData:false,
+//    url:'importBusiness/poSearch.do',
+//        localUrl:'../test-data/topic-list.json',
+//        success:function(data, status, requestCode)
+//        {
+//            data.data = {
+//                time:1488525824,
+//                currency:"22",
+//                data:{
+//                    lang:"中文",
+//                    time:{
+//                        test:"ceshi"
+//                    },
+//                    test:"测试"
+//                }
+//            };
+////            format.binding(data.data);
+//        },
+//        error:function(respon){
+//            console.log(respon);
+//        }
+//    });
+
+
+
 
 
 var data = {
@@ -155,14 +182,19 @@ var data = {
     }
 };
 
-mapping.matchCode('topicType',data,function(data){
-//    alert(JSON.stringify(data));
-});
+//mapping.matchCode('topicType',data,function(data){
+////    alert(JSON.stringify(data));
+//});
 
 new dropDown({
     warp:$('#search'),
     submitParam:'param',
-    getListParam:'topicId',
+    data:{data:"dsdafda",
+    arrays:[
+        {dd:"dddddd"},
+        {dd:"wwww"}
+    ]},
+    getListParam:'',
     requireParam:{
         url:'api/bacInfo/mapping/serviceStatus',
         localUrl:'../test-data/topic-list.json',

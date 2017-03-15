@@ -112,6 +112,7 @@
                 $(this).removeClass('active');
                 if($(this).find('a').html() == num){
                     $(this).addClass('active');
+                    self.$input.val(num);
                     self.default.callBack(num);
                 }
             });

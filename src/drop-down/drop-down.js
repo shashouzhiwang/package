@@ -41,6 +41,9 @@
             var self = this;
             var data = {};
             data[this.default.submitParam] = val;
+            if(this.default.data){
+                data = $.extend(data,this.default.data);
+            }
             asynLoad.ajax(
                 $.extend(this.default.requireParam,{
                     success:function(response,status){
@@ -53,18 +56,20 @@
             var self = this;
             var oldTime,newTime;
             var setTime;
-            this.$input.on('keyup',function(){
+            this.$input.on('keyup',function(e){
+                if(e.which == 38 || e.which == 40 || e.which == 13){
+                    self.useKeySelect(e.which);
+                    return;
+                }
                 var val = $(this).val();
                 clearTimeout(setTime);
                 setTime = setTimeout(function(){
-                    //self.default.asynRequire(val,self.generate);
                     self.asynRequire(val);
                 },300);
                 if(oldTime){
                     newTime = new Date().getTime();
                     if((newTime-oldTime)>300){
                         clearTimeout(setTime);
-                        //self.default.asynRequire(val,self.generate);
                         self.asynRequire(val);
                     }
                     oldTime = newTime;
@@ -72,31 +77,55 @@
                     oldTime = new Date().getTime();
                 }
             });
-
-            this.$input.on('blur',function(){
-                self.default.warp.find('.search_content').empty();
-            })
         },
         generate:function(data, status){
             var self = this;
             self.default.warp.find('.search_content').empty();
+            self.selectList();
+            var temWarp = '';
             $.each(data.data,function(index,item){
-                self.$searchList = $('<div>');
-                self.default.getListParam ? self.$searchList.html(item[self.default.getListParam]): self.$searchList.html(item.name);
-                self.default.warp.find('.search_content').append(self.$searchList);
-                self.selectList();
-            })
+               var tem = self.default.getListParam ? item[self.default.getListParam]: item.name;
+               tem= index==0 ? "<div class='active'>"+ tem +"</div>":"<div>"+ tem +"</div>";
+               temWarp += tem;
+            });
+            self.default.warp.find('.search_content').html(temWarp);
          },
         selectList:function(){
             var self = this;
-            this.$searchList.on('click',function(){
+            self.default.warp.find('.search_content').on('click','div',function(){
                 self.$input.val($(this).html());
                 self.default.warp.find('.search_content').empty();
             })
-    }
+        },
+        useKeySelect:function(keyVal){
+            var $list = this.default.warp.find('.search_content div');
+            var index = $list.index(this.default.warp.find('.search_content div.active'));
+            console.log(index);
+            if(keyVal == 40){
+                if(index == $list.length-1)
+                    return;
+                $list.eq(index).removeClass('active');
+                $list.eq(index+1).addClass('active');
+            }
+            if(keyVal == 38){
+                if(index == 0)
+                    return;
+                $list.eq(index).removeClass('active');
+                $list.eq(index-1).addClass('active');
+            }
+            if(keyVal == 13){
+                this.$input.val($list.eq(index).html());
+                this.default.warp.find('.search_content').empty();
+            }
+        }
     };
     function construct(){
-
     }
     window['dropDown'] = dropDown;
 })($);
+
+$(document).click(function(){
+    if($('.search_content').length>0){
+        $('.search_content').empty();
+    }
+});
