@@ -26,7 +26,7 @@ module.exports = {
     paths: {
         js: resolveToApp('/**/*!(.doc.js).js'),
         docJs: resolveToApp('/**/*.doc.js'),
-        css:resolveToApp('/**/!(iconfont)*.css'),
+        css:resolveToApp('/**/!(iconfont)*.scss'),
         img:resolveToApp('/**/image/*.*'),
         font:resolveToApp('/**/font/*.*'),
         html: [

@@ -11,6 +11,9 @@ exports.task = function () {
         server: {
             baseDir: "./"
         },
+        ui:{
+            port:3002
+        },
         open: false,
         port:8087
     });

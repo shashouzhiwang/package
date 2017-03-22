@@ -3,6 +3,7 @@
 <head>
     <title>package</title>
     <link rel="stylesheet" href="skin/default/font/iconfont.css">
+    <link rel="stylesheet" href="main/main.min.css">
     <style>input{width:50px;}
     .invaild{
         color:red;
@@ -12,14 +13,7 @@
         background: red;
     }
 
-     .pageNav ul li{
-         list-style:none;width:40px;display: inline-block;border:1px solid #ccc;height:40px;line-height: 40px;text-align: center;cursor:pointer;
-         -moz-user-select:none;
-         -webkit-user-select:none;
-     }
-    .pageNav ul li.active{
-        border:1px solid red;background: red;color:white;
-    }
+
     </style>
 </head>
 <body>
@@ -28,6 +22,7 @@
     <input type="text" required value="22" pattern="" />
     <input type="text"  value="" pattern="^(((13[0-9]{1})|(15[0-9]{1})|(18[0-9]{1}))+\d{8})$" />
     <input type="text" required pattern="" />
+    <!--<div id="search"></div>-->
 </form>
 
 <div>
@@ -49,7 +44,7 @@
 <div key="data.time.test">dd</div>
 <div key="data.test">dd</div>
 
-<div id="search"></div>
+
 <div id="page"></div>
 
 <script src="../bower_components/jquery/dist/jquery.min.js"></script>
@@ -74,8 +69,9 @@
 
 function submit(){
 //    formCheck.check($('form'));
-    var test = {};
-    collect.collectData('collect',test)
+    console.log(formCheck.check($('form')));
+//    var test = {};
+//    collect.collectData('collect',test)
 }
 
 //    dialog.confirm({
@@ -98,8 +94,6 @@ function submit(){
 //});
 //consumerModel.loading();
 //consumerModel.loadingClose();
-
-
 
 
 //asynLoad.ajax({
@@ -190,11 +184,13 @@ new dropDown({
     warp:$('#search'),
     submitParam:'param',
     data:{data:"dsdafda",
-    arrays:[
-        {dd:"dddddd"},
-        {dd:"wwww"}
-    ]},
+        arrays:[
+            {dd:"dddddd"},
+            {dd:"wwww"}
+        ]},
     getListParam:'',
+    getListCode:"code",
+    required:true,
     requireParam:{
         url:'api/bacInfo/mapping/serviceStatus',
         localUrl:'../test-data/topic-list.json',

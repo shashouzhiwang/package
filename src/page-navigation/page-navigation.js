@@ -7,7 +7,8 @@
         self.default = {
             showNum:5,
             startPage:1,
-            curPage:1
+            curPage:1,
+            style:2
         };
         self.default['endPage'] = self.default.showNum;
         self.default = $.extend(self.default,data);
@@ -17,22 +18,23 @@
 
     page.prototype = {
         renderDOM:function(){
+            var pre = this.default.style == 1 ? "<span class='iconfont icon-chevronleft page-controller'></span>" : "<span class='page-controller'>上一页</span>";
+            var next = this.default.style == 1 ? "<span class='iconfont icon-you page-controller'></span>" : "<span class='page-controller'>下一页</span>";
             var str = "<nav class='pageNav'>"+
                             "<ul>"+
                                 "<li>"+
-                                    "<a>"+
-                                        "<span class='iconfont icon-chevronleft page-controller'></span>"+
-                                    "</a>"+
+                                    "<a>"+pre+"</a>"+
                                 "</li>"+
 
                                 "<li>"+
-                                    "<a>"+
-                                        "<span class='iconfont icon-you page-controller'></span>"+
-                                    "</a>"+
+                                    "<a>"+next+"</a>"+
                                 "</li>"+
                             "</ul>"+
-                            "当前第<input class='index' type='text' value="+this.default.curPage+" />页"+
-                            "<span>共有<span>"+this.default.data.totalRows+"</span>条，每页显示<span>"+this.default.data.defaultSize+"</span>条</span>"+
+                            "<div class='description'>"+
+                                "<div class='index'>第 <input class='index' type='text' value="+this.default.curPage+" /> 页</div>"+
+                                "<div class='totalPage'>共<span class='num'>"+this.default.data.totalRows+"</span>条</div>" +
+                                "<div class='prePage'>，每页显示<span class='num'>"+this.default.data.defaultSize+"</span>条</div>"+
+                            "</div>"+
                         "</nav>";
             this.default.warp.html(str);
             this.$li_first = this.default.warp.find('li').first();

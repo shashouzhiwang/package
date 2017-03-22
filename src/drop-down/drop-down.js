@@ -15,26 +15,47 @@
 (function ($, undefined) {
     var dropDown = function (data) {
         var self = this;
-        self.default = {
-        };
+        this.construct();
         self.default = $.extend(self.default,data);
-
         this.renderDOM();
-
-        construct();
-
     };
 
     dropDown.prototype = {
+        construct: function (){
+            this.data = [];
+            this.default = {
+                data:{},
+                submitParam:'param',
+                getListParam:'name',
+                getListCode:"code",
+                required:false,
+            };
+        },
         renderDOM: function () {
+            var inp = this.default.required ? "<input type='text' required/>" : "<input type='text' />";
             var str = "<div class='searchWarp'><div class='search_input'>" +
-                            "<input type='text'/>" +
+                        inp +
                        "</div>"+
                        "<div class='search_content'>"+
                        "</div></div>";
             this.default.warp.html(str);
             this.$input = this.default.warp.find('input');
             this.inputKeyup();
+            var self = this;
+            self.$input.on('blur',function(){
+                var val = self.$input.val(),i=0;
+                $.each(self.data,function(index,item){
+                    item = self.getCode_Name(item);
+                    if(val == item.name){
+                        self.$input.attr('key',item.code);
+                        return false;
+                    }
+                    i++;
+                });
+                if(i>=self.data.length){
+                    self.$input.val('');
+                }
+            })
         },
         asynRequire:function(val){
             //this.default.warp.find('.search_content').append('dasdfsa');
@@ -47,6 +68,7 @@
             asynLoad.ajax(
                 $.extend(this.default.requireParam,{
                     success:function(response,status){
+                        self.data = response.data;
                         self.generate(response,status);
                     },
                     data:data
@@ -57,6 +79,7 @@
             var oldTime,newTime;
             var setTime;
             this.$input.on('keyup',function(e){
+                self.$input.attr('key','');
                 if(e.which == 38 || e.which == 40 || e.which == 13){
                     self.useKeySelect(e.which);
                     return;
@@ -84,8 +107,10 @@
             self.selectList();
             var temWarp = '';
             $.each(data.data,function(index,item){
-               var tem = self.default.getListParam ? item[self.default.getListParam]: item.name;
-               tem= index==0 ? "<div class='active'>"+ tem +"</div>":"<div>"+ tem +"</div>";
+                item = self.getCode_Name(item);
+               var tem = item.name;
+               var code = item.code;
+               tem= index==0 ? "<div class='active' data-code="+item.code+">"+ tem +"</div>":"<div data-code="+item.code+">"+ tem +"</div>";
                temWarp += tem;
             });
             self.default.warp.find('.search_content').html(temWarp);
@@ -93,14 +118,20 @@
         selectList:function(){
             var self = this;
             self.default.warp.find('.search_content').on('click','div',function(){
-                self.$input.val($(this).html());
+                self.$input.val($(this).html()).attr('key',$(this).attr('data-code'));
                 self.default.warp.find('.search_content').empty();
             })
+        },
+        getCode_Name:function(item){
+            return {
+                name:this.default.getListParam ? item[this.default.getListParam]: item.name,
+                code:this.default.getListCode ? item[this.default.getListCode]: item.code
+            }
         },
         useKeySelect:function(keyVal){
             var $list = this.default.warp.find('.search_content div');
             var index = $list.index(this.default.warp.find('.search_content div.active'));
-            console.log(index);
+            // console.log(index);
             if(keyVal == 40){
                 if(index == $list.length-1)
                     return;
@@ -114,13 +145,14 @@
                 $list.eq(index-1).addClass('active');
             }
             if(keyVal == 13){
-                this.$input.val($list.eq(index).html());
+                if($list.length==0)
+                    return;
+                this.$input.val($list.eq(index).html()).attr('key',$list.eq(index).attr('data-code'));
                 this.default.warp.find('.search_content').empty();
             }
         }
     };
-    function construct(){
-    }
+
     window['dropDown'] = dropDown;
 })($);
 

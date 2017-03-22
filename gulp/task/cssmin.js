@@ -4,6 +4,7 @@
 var gulp = require('gulp'),
     concatCss = require('gulp-concat-css'),
     cssmin = require('gulp-cssmin'),
+    sass = require('gulp-sass'),
     sourcemaps = require('gulp-sourcemaps'),
     rename = require('gulp-rename'),
 
@@ -11,6 +12,7 @@ var gulp = require('gulp'),
 
 exports.task = function () {
     return gulp.src(config.paths.css)
+        .pipe(sass().on('error', sass.logError))
         .pipe(sourcemaps.init({loadMaps: true}))
         .pipe(concatCss("main.css"))
         .pipe(gulp.dest(config.output))

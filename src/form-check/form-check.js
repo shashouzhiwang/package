@@ -14,13 +14,16 @@ var formCheck ={};
         var $input = $curForm.find('input');
         var vaild = true;
         $.each($input,function(index,item){
-            vaild = singleInput($(this));
-            if(vaild)
-            restoreInput($curForm);
+            var tem = singleInput($(this));
+            restoreInput(tem,$(this));
+            if(!tem){
+                vaild = false;
+            }
         });
         return vaild;
     }
 
+    //校验函数
     function singleInput(input){
         var inputVaild = true;
         if(typeof(input.attr("required"))!="undefined" && !input.val()){
@@ -38,22 +41,25 @@ var formCheck ={};
         }
         return inputVaild;
     }
-
-    function restoreInput($curForm){
-        var $input = $curForm.find('input');
-        $.each($input,function(index,item){
-            $(this).removeClass('invaild');
-        })
+//转变为校验通过状态
+    function restoreInput(vaild,$input){
+       // var $input = $curForm.find('input');
+       //  $.each($input,function(index,item){
+       //      $(this).removeClass('invaild');
+       //  })
+        vaild ? $input.removeClass('invaild') : $input.addClass('invaild');
     }
-
+//失去焦点是校验
     function init($curForm){
         var $input = $curForm.find('input');
         $.each($input,function(index,item){
+            $(this).unbind('focus');
             $(this).on('focus',function(){
                 $(this).removeClass('invaild');
             });
         });
         $.each($input,function(index,item){
+            $(this).unbind('blur');
             $(this).on('blur',function(){
                 if(singleInput($(this))){
                     $(this).removeClass('invaild');
