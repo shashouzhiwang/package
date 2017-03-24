@@ -33,7 +33,7 @@ var formCheck ={};
         if(typeof(input.attr('pattern')) != "undefined"){
             if(input.attr('pattern')){
                 var myreg = eval("/"+input.attr('pattern')+"/");
-                if(!myreg.test(input.val() || input.val().length == 0)){
+                if(!myreg.test(input.val()) && input.val().length != 0){
                     input.addClass('invaild');
                     inputVaild = false;
                 }

@@ -52,3 +52,57 @@ nav.pageNav{
 
   }
 }
+
+nav.skin{
+  font-size: 12px;
+  color: nth(nth($color, 3), 2);
+  ul{
+    display: inline-block;
+    >li {
+      list-style: none;
+      display: inline-block;
+      height: 40px;
+      width:40px;
+      line-height: 40px;
+      text-align: center;
+      cursor: pointer;
+      -moz-user-select: none;
+      -webkit-user-select: none;
+      border: 1px solid nth(nth($color,8),2);
+      border-right: none;
+      &:not(:first-of-type){
+        &:not(:last-of-type){
+          //display:none;
+        }
+      }
+      &.active {
+        background: nth(nth($color, 5), 2);
+        color: white;
+      }
+    }
+    & ~ .description{
+      display: inline-block;
+      .index{
+        display: inline-block;
+        margin-right: 10px;
+        font-size: 13px;
+        input[type=text]{
+          width: 30px;
+          display: inline-block;
+          color: nth(nth($color,3),2);
+        }
+      }
+      .totalPage{
+        font-size: 13px;
+        display: inline-block;
+        .num{
+          color: nth(nth($color,5),2);
+        }
+      }
+      .prePage{
+        display: none;
+      }
+    }
+
+  }
+}

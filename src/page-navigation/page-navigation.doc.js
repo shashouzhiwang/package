@@ -16,9 +16,18 @@ function pageNav_demo(pageData,showNum){
     new page({
         warp:$('#page'),
         data:pageData,
-        showNum:5,
+        showNum:5, //一次显示多少个页面按钮
+        style:2,  //UI风格   默认为2
         callBack:function(index){
             alert(index);
         }
+    });
+
+
+    // 重新加载后或者查询数据后更新该导航时使用该函数
+    page.refresh({
+        totalRows:160,
+        defaultSize:10,
+        pageSize:16
     });
 }
