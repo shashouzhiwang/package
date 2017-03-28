@@ -28,13 +28,14 @@
                 submitParam:'param',
                 getListParam:'name',
                 getListCode:"code",
+                invaildTip:"校验未通过",
                 required:false,
             };
         },
         renderDOM: function () {
             var inp = this.default.required ? "<input type='text' required/>" : "<input type='text' />";
             var str = "<div class='searchWarp'><div class='search_input'>" +
-                        inp +
+                        inp + "<span class='invaildTip'>"+this.default.invaildTip+"</span>"+
                        "</div>"+
                        "<div class='search_content'>"+
                        "</div></div>";

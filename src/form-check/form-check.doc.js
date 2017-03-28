@@ -6,9 +6,9 @@
 
 function demo_form_check_demo(required,pattern){
     //<form name="test">
-    //    <input type="text" required value="22" pattern="" />
-    //    <input type="text"  value="" pattern="^(((13[0-9]{1})|(15[0-9]{1})|(18[0-9]{1}))+\d{8})$" />
-    //    <input type="text" required pattern="" />
+    //    <input type="text" required value="22" pattern="" /><span class="invaildTip">校验未通过</span>
+    //    <input type="text"  value="" pattern="^(((13[0-9]{1})|(15[0-9]{1})|(18[0-9]{1}))+\d{8})$" /><span class="invaildTip">校验未通过</span>
+    //    <input type="text" required pattern="" /><span class="invaildTip">校验未通过</span>
     //</form>
     //<div onclick="submit()">提交</div>
 

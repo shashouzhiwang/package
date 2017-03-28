@@ -1,0 +1,21 @@
+//1-white,2-semi,3-grey,4-ash,5-blue,6-green,7-red,8-line,9-lightgrey,10-yellow,11-light,12-lightyellow
+@import "../lib/init.fun";
+form{
+  input{
+    width: 150px;
+    height: 25px;
+    +span.invaildTip{
+      display: none;
+    }
+    &.invaild{
+      background:#FFE7E7;
+      border:1px solid nth(nth($color,8),2);
+      +span.invaildTip{
+        display: inline-block;
+        font-size: 12px;
+        color: red;
+        margin-left:10px;
+      }
+    }
+  }
+}

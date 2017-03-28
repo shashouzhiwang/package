@@ -5,10 +5,6 @@
     <link rel="stylesheet" href="skin/default/font/iconfont.css">
     <link rel="stylesheet" href="main/main.min.css">
     <style>input{width:50px;}
-    .invaild{
-        color:red;
-        border:1px solid red;
-    }
     .search_content .active{
         background: red;
     }
@@ -19,10 +15,10 @@
 <body>
 <h1>package</h1>
 <form name="test">
-    <input type="text" required value="22" pattern="" />
-    <input type="text"  value="" required pattern="^(((13[0-9]{1})|(15[0-9]{1})|(18[0-9]{1}))+\d{8})$" />
-    <input type="text" required pattern="" />
-    <!--<div id="search"></div>-->
+    <input type="text" required value="22" pattern="" /><span class="invaildTip">校验未通过</span>
+    <input type="text"  value="" required pattern="^(((13[0-9]{1})|(15[0-9]{1})|(18[0-9]{1}))+\d{8})$" /><span class="invaildTip">校验未通过</span>
+    <input type="text" required pattern="" /><span class="invaildTip">校验未通过</span>
+    <div id="search"></div>
 </form>
 
 <div>
@@ -206,6 +202,7 @@ new dropDown({
     getListParam:'',
     getListCode:"code",
     required:true,
+    invaildTip:"邮箱不能为空",
     requireParam:{
         url:'api/bacInfo/mapping/serviceStatus',
         localUrl:'../test-data/topic-list.json',
