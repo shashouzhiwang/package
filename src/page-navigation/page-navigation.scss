@@ -6,7 +6,7 @@ nav.pageNav{
   color: nth(nth($color, 3), 2);
   ul{
     display: inline-block;
-    >li {
+    >li{
       list-style: none;
       display: inline-block;
       margin-right:10px;

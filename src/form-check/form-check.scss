@@ -4,6 +4,9 @@ form{
   input{
     width: 150px;
     height: 25px;
+    &.invaild{
+      color:red;
+    }
     +span.invaildTip{
       display: none;
     }

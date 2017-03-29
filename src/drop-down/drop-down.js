@@ -33,9 +33,9 @@
             };
         },
         renderDOM: function () {
-            var inp = this.default.required ? "<input type='text' required/>" : "<input type='text' />";
+            var inp = this.default.required ? "<input type='text' drop=true required data-invaildTip = "+this.default.invaildTip+">" : "<input type='text' />";
             var str = "<div class='searchWarp'><div class='search_input'>" +
-                        inp + "<span class='invaildTip'>"+this.default.invaildTip+"</span>"+
+                        inp +
                        "</div>"+
                        "<div class='search_content'>"+
                        "</div></div>";
@@ -57,6 +57,11 @@
                     self.$input.val('');
                 }
             })
+            self.$input.on('focus',function(){
+                self.$input.removeClass('invaild');
+                if(self.$input.val() == self.$input.attr('data-invaildtip'))
+                    self.$input.val('');
+            });
         },
         asynRequire:function(val){
             //this.default.warp.find('.search_content').append('dasdfsa');

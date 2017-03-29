@@ -26,9 +26,11 @@ var formCheck ={};
     //校验函数
     function singleInput(input){
         var inputVaild = true;
-        if(typeof(input.attr("required"))!="undefined" && !input.val()){
-            input.addClass('invaild');
-            inputVaild = false;
+        if(typeof(input.attr("required"))!="undefined" ){
+            if(!input.val() || input.val() == input.attr('data-invaildTip')){
+                input.addClass('invaild');
+                inputVaild = false;
+            }
         }
         if(typeof(input.attr('pattern')) != "undefined"){
             if(input.attr('pattern')){
@@ -39,8 +41,30 @@ var formCheck ={};
                 }
             }
         }
+        if(!inputVaild)
+            showInvaild(input);
         return inputVaild;
     }
+
+    function showInvaild(input){
+        if(input.val() == input.attr('data-invaildTip'))
+            return;
+        input.attr('data-cache',input.val());
+        input.val(input.attr('data-invaildTip'));
+    }
+
+    function showVaild(input){
+        if(input.attr('data-cache'))
+        input.val(input.attr('data-cache'));
+        else{
+            input.val('');
+        }
+    }
+
+    function cacheVal(input){
+        input.attr('data-cache',input.val());
+    }
+
 //转变为校验通过状态
     function restoreInput(vaild,$input){
        // var $input = $curForm.find('input');
@@ -53,18 +77,25 @@ var formCheck ={};
     function init($curForm){
         var $input = $curForm.find('input');
         $.each($input,function(index,item){
+            if($(this).attr('drop'))
+                return;
             $(this).unbind('focus');
             $(this).on('focus',function(){
                 $(this).removeClass('invaild');
+                showVaild($(this));
             });
         });
         $.each($input,function(index,item){
+            if($(this).attr('drop'))
+                return;
             $(this).unbind('blur');
             $(this).on('blur',function(){
                 if(singleInput($(this))){
                     $(this).removeClass('invaild');
+                    cacheVal($(this));
                 }else{
                     $(this).addClass('invaild');
+                    showInvaild($(this));
                 }
             });
         })
