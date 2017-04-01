@@ -1,24 +1,33 @@
 /**
  * Created by Loki.Luo on 2017/3/3.
  */
-var format = {};
-(function(context){
-    context.curKey = null;
-    context.curVal = null;
-    context.getAsynData = function(data){
+!function(factory) {
+    if (typeof require === 'function' && typeof exports === 'object' && typeof module === 'object') {
+        var target = module['exports'] || exports;
+        factory(target);
+    } else if (typeof define === 'function' && define['amd']) {
+        define('format',['exports'], factory);
+    } else {
+        factory(window['format'] = {});
+    }
+}(function(koExports){
+    var format = typeof koExports !== 'undefined' ? koExports : {};
+    format.curKey = null;
+    format.curVal = null;
+    format.getAsynData = function(data){
 
         var i = 0;
-        $.each(context.curKey,function(index,item){
+        $.each(format.curKey,function(index,item){
             i ++;
-            if(i==context.curKey.length){
-                context.curVal = data[item];
+            if(i==format.curKey.length){
+                format.curVal = data[item];
                 return false;
             }else{
                 data = data[item];
             }
         });
 
-       // context.getJsonVal(context.curKey,data);
+        // context.getJsonVal(context.curKey,data);
 
         //switch (mapping.judgeObject(data)){
         //    case 'Array' : break;
@@ -28,73 +37,73 @@ var format = {};
 
     };
 
-    context.getJsonVal = function(curKey,data){
+    format.getJsonVal = function(curKey,data){
         //return data[item];
     };
 
-    context.checkType = function(data){
+    format.checkType = function(data){
         for(key in data){
 
             switch (mapping.judgeObject(data[key])){
                 case 'Array' : break;
-                case 'Object' : context.getAsynData(data[key]); break;
-                case 'NAN':context.getCurVal(data);break;
+                case 'Object' : format.getAsynData(data[key]); break;
+                case 'NAN':format.getCurVal(data);break;
             }
 
         }
     };
 
-    context.getCurVal = function(data){
+    format.getCurVal = function(data){
         for(key in data){
             //$key.attr(key)
-            if(key == context.curKey){
-                context.curVal = data[key];
+            if(key == format.curKey){
+                format.curVal = data[key];
             }
         }
     };
 
-    context.init = function(data){
+    format.init = function(data){
         $key = $('[key]');
         $.each($key,function(index,item){
-            context.curVal = null;
-            context.curKey = $(this).attr('key').split('.');
-            context.transfrom($(this),data);
+            format.curVal = null;
+            format.curKey = $(this).attr('key').split('.');
+            format.transfrom($(this),data);
         });
     };
 
-    context.transfrom = function(_this,data){
-        if(!context.curKey)
-        return;
+    format.transfrom = function(_this,data){
+        if(!format.curKey)
+            return;
 
-        context.transfromArray = context.curKey[0].split('|');
-        if(context.transfromArray.length>1){
-            context.transfromPrefix_param = $.trim(context.transfromArray[0]).split(' ');
-            context.curKey[0] = $.trim(context.transfromArray[1]);
+        format.transfromArray = format.curKey[0].split('|');
+        if(format.transfromArray.length>1){
+            format.transfromPrefix_param = $.trim(format.transfromArray[0]).split(' ');
+            format.curKey[0] = $.trim(format.transfromArray[1]);
         }
-        context.getAsynData(data);
-        if(context.transfromPrefix_param){
-            context.transfromPrefix = context.transfromPrefix_param[0];
-            context.transfromPrefix_param.splice(0,1);
-            context.transfromParam = context.transfromPrefix_param[0];
+        format.getAsynData(data);
+        if(format.transfromPrefix_param){
+            format.transfromPrefix = format.transfromPrefix_param[0];
+            format.transfromPrefix_param.splice(0,1);
+            format.transfromParam = format.transfromPrefix_param[0];
 
-            switch(context.transfromPrefix){
+            switch(format.transfromPrefix){
                 case '$time' :
                     var param ='';
-                    $.each(context.transfromPrefix_param,function(index,item){
+                    $.each(format.transfromPrefix_param,function(index,item){
                         param += ' '+item;
                     });
-                    context.time_transfrom(context.curVal,param);break;
+                    format.time_transfrom(format.curVal,param);break;
                 case '$currency' :
-                    context.currency_transfrom(context.curVal,context.transfromPrefix_param);break;
+                    format.currency_transfrom(format.curVal,format.transfromPrefix_param);break;
             }
         }
-        context.transfromPrefix = null;
-        if(context.curVal)
-            _this.html(context.curVal);
+        format.transfromPrefix = null;
+        if(format.curVal)
+            _this.html(format.curVal);
 
     };
 
-    context.time_transfrom = function(dateObj,format){
+    format.time_transfrom = function(dateObj,format){
         dateObj = new Date(dateObj);
         var o = {
             "M+" : dateObj.getMonth()+1, //month
@@ -117,12 +126,12 @@ var format = {};
                 format = format.replace(RegExp.$1, RegExp.$1.length==1 ? o[k] : ("00"+ o[k]).substr((""+ o[k]).length));
             }
         }
-        context.curVal = format;
+        format.curVal = format;
 
-        return context.curVal;
+        return format.curVal;
     };
 
-    context.currency_transfrom = function(data,array){
+    format.currency_transfrom = function(data,array){
         if(array.length>0){
             var tem = new Number(data);
             data = tem.toFixed(array[0]);
@@ -130,12 +139,12 @@ var format = {};
         if(array.length>1){
             data = array[1]+data;
         }
-        context.curVal = data;
-        return context.curVal;
+        format.curVal = data;
+        return format.curVal;
     };
 
-    context.binding = function(data){
-        context.init(data);
+    format.binding = function(data){
+        format.init(data);
     };
+});
 
-})(format);

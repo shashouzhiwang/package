@@ -10,7 +10,7 @@ var gulp = require('gulp'),
     config = require('../config');// gulp公共配置
 
 exports.task = function () {
-    return gulp.src([config.paths.js,'!'+config.paths.docJs])
+    return gulp.src([config.paths.js,'!'+config.paths.docJs,'!src/require.config.js','!src/asyn.test.js','!src/**/test.js'])
         .pipe(sourcemaps.init({loadMaps: true}))
         .pipe(concat("main.js"))
         .pipe(gulp.dest(config.output))

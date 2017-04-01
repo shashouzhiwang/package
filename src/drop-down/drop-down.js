@@ -11,16 +11,30 @@
  *
  *
  */
-
-(function ($, undefined) {
-    var dropDown = function (data) {
-        var self = this;
-        this.construct();
-        self.default = $.extend(self.default,data);
-        this.renderDOM();
+!function(factory) {
+    if (typeof require === 'function' && typeof exports === 'object' && typeof module === 'object') {
+        var target = module['exports'] || exports;
+        factory(target);
+    } else if (typeof define === 'function' && define['amd']) {
+        define('dropDown',['exports','asynLoad'], factory);
+    } else {
+        factory(window['dropDown']=function(data){
+            this.init(data);
+        },asynLoad);
+    }
+}(function(koExports,asynLoad){
+    var dropDown = typeof koExports !== 'undefined' ? koExports : {};
+    var tem = function(data){
+        this.init(data);
     };
-
-    dropDown.prototype = {
+    tem.prototype = dropDown.prototype = {
+        init:function (data) {
+            var self = this;
+            console.log(dropDown);
+            this.construct();
+            self.default = $.extend(self.default,data);
+            this.renderDOM();
+        },
         construct: function (){
             this.data = [];
             this.default = {
@@ -35,10 +49,10 @@
         renderDOM: function () {
             var inp = this.default.required ? "<input type='text' drop=true required data-invaildTip = "+this.default.invaildTip+">" : "<input type='text' />";
             var str = "<div class='searchWarp'><div class='search_input'>" +
-                        inp +
-                       "</div>"+
-                       "<div class='search_content'>"+
-                       "</div></div>";
+                inp +
+                "</div>"+
+                "<div class='search_content'>"+
+                "</div></div>";
             this.default.warp.html(str);
             this.$input = this.default.warp.find('input');
             this.inputKeyup();
@@ -76,9 +90,10 @@
                     success:function(response,status){
                         self.data = response.data;
                         self.generate(response,status);
+                        self.default.requireParam.callBack(self.data);
                     },
                     data:data
-            }));
+                }));
         },
         inputKeyup:function(){
             var self = this;
@@ -114,13 +129,13 @@
             var temWarp = '';
             $.each(data.data,function(index,item){
                 item = self.getCode_Name(item);
-               var tem = item.name;
-               var code = item.code;
-               tem= index==0 ? "<div class='active' data-code="+item.code+">"+ tem +"</div>":"<div data-code="+item.code+">"+ tem +"</div>";
-               temWarp += tem;
+                var tem = item.name;
+                var code = item.code;
+                tem= index==0 ? "<div class='active' data-code="+item.code+">"+ tem +"</div>":"<div data-code="+item.code+">"+ tem +"</div>";
+                temWarp += tem;
             });
             self.default.warp.find('.search_content').html(temWarp);
-         },
+        },
         selectList:function(){
             var self = this;
             self.default.warp.find('.search_content').on('click','div',function(){
@@ -158,12 +173,8 @@
             }
         }
     };
-
-    window['dropDown'] = dropDown;
-})($);
-
-$(document).click(function(){
-    if($('.search_content').length>0){
-        $('.search_content').empty();
+    if(typeof dropDown !== "function"){
+        dropDown.init = tem;
     }
 });
+

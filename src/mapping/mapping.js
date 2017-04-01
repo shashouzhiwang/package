@@ -1,16 +1,25 @@
 /**
  * Created by Loki.Luo on 2017/3/2.
  */
-var mapping = {};
-(function(context){
-    context.matchCode = function (lookupTypeArray,needMatchData,cb){
+!function(factory) {
+    if (typeof require === 'function' && typeof exports === 'object' && typeof module === 'object') {
+        var target = module['exports'] || exports;
+        factory(target);
+    } else if (typeof define === 'function' && define['amd']) {
+        define('mapping',['exports','asynLoad','config'], factory);
+    } else {
+        factory(window['mapping'] = {},asynLoad,config);
+    }
+}(function(koExports,asynLoad,config) {
+    var mapping = typeof koExports !== 'undefined' ? koExports : {};
+    mapping.matchCode = function (lookupTypeArray,needMatchData,cb){
         return asynLoad.ajax({
             //"url": "../test-data/code.json",
             type:"GET",
             "Content-Type":'application/json',
             dataType:'json',
             forbidBindingKey:true,
-            "url": "api/bacInfo/mapping/"+lookupTypeArray,
+            "url": config.mappingUrl+lookupTypeArray,
             "data": {
             },
             success:function(data){
@@ -19,18 +28,18 @@ var mapping = {};
                 }
                 if(!data.data){
                 }
-                cb(context.replaceCode(lookupTypeArray,data.data,needMatchData));
+                cb(mapping.replaceCode(lookupTypeArray,data.data,needMatchData));
             }
         });
     };
 
-    context.replaceCode = function(lookupType,codeArray,needMatchData){
-        if(context.judgeObject(needMatchData) == 'Array'){
+    mapping.replaceCode = function(lookupType,codeArray,needMatchData){
+        if(mapping.judgeObject(needMatchData) == 'Array'){
             $.each(needMatchData,function(index,item){
                 traverseNeedMatch(lookupType,codeArray,item);
             })
         }else{
-            if(context.judgeObject(needMatchData) == 'Object'){
+            if(mapping.judgeObject(needMatchData) == 'Object'){
                 for(var key in needMatchData){
                     traverseNeedMatch(lookupType,codeArray,needMatchData[key]);
                 }
@@ -40,7 +49,7 @@ var mapping = {};
         return needMatchData;
     };
 
-    context.judgeObject = function(needMatchData){
+    mapping.judgeObject = function(needMatchData){
         if(typeof(needMatchData) == 'object'){
             if(typeof needMatchData.length == 'number'){
                 return 'Array';
@@ -56,8 +65,8 @@ var mapping = {};
      *
      */
     function traverseNeedMatch(lookupType,codeArray,needMatchData){
-        if(context.judgeObject(needMatchData) == 'Array'){
-            context.replaceCode(lookupType,codeArray,needMatchData);
+        if(mapping.judgeObject(needMatchData) == 'Array'){
+            mapping.replaceCode(lookupType,codeArray,needMatchData);
         }else{
             traverseBacInfo(lookupType,needMatchData,codeArray);
         }
@@ -73,8 +82,8 @@ var mapping = {};
      */
     function traverseBacInfo(lookupType,json,codeArray){
         for(key in json){
-            if(context.judgeObject(json[key]) != 'NAN'){
-                context.replaceCode(lookupType,codeArray,json[key]);
+            if(mapping.judgeObject(json[key]) != 'NAN'){
+                mapping.replaceCode(lookupType,codeArray,json[key]);
             }
             if(key == lookupType){
                 $.each(codeArray,function(i,obj){
@@ -86,6 +95,5 @@ var mapping = {};
             }
         }
     }
+});
 
-
-})(mapping);

@@ -1,15 +1,17 @@
 /**
  * Created by Loki.Luo on 2017/3/2.
  */
-var formCheck ={};
-(function(context){
-
-    //function traverseForm($form){
-    //    $.each($form,function(index,item){
-    //        checkInput($(this));
-    //    })
-    //}
-
+!function(factory) {
+    if (typeof require === 'function' && typeof exports === 'object' && typeof module === 'object') {
+        var target = module['exports'] || exports;
+        factory(target);
+    } else if (typeof define === 'function' && define['amd']) {
+        define('formCheck',['exports'], factory);
+    } else {
+        factory(window['formCheck'] = {});
+    }
+}(function(koExports){
+    var formCheck = typeof koExports !== 'undefined' ? koExports : {};
     function checkInput($curForm){
         var $input = $curForm.find('input');
         var vaild = true;
@@ -55,7 +57,7 @@ var formCheck ={};
 
     function showVaild(input){
         if(input.attr('data-cache'))
-        input.val(input.attr('data-cache'));
+            input.val(input.attr('data-cache'));
         else{
             input.val('');
         }
@@ -67,10 +69,10 @@ var formCheck ={};
 
 //转变为校验通过状态
     function restoreInput(vaild,$input){
-       // var $input = $curForm.find('input');
-       //  $.each($input,function(index,item){
-       //      $(this).removeClass('invaild');
-       //  })
+        // var $input = $curForm.find('input');
+        //  $.each($input,function(index,item){
+        //      $(this).removeClass('invaild');
+        //  })
         vaild ? $input.removeClass('invaild') : $input.addClass('invaild');
     }
 //失去焦点是校验
@@ -101,12 +103,13 @@ var formCheck ={};
         })
     }
 
-    context.check = function($form){
+    formCheck.check = function($form){
         if($form.length<1){
             return;
         }
         init($form);
         //traverseForm($form);
-         return checkInput($form);
+        return checkInput($form);
     }
-})(formCheck);
+});
+

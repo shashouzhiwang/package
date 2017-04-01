@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>异步请求模块</title>
+    <link rel="stylesheet" href="../main/main.min.css">
+    <script data-main="test" src="../../bower_components/requirejs/require.js"></script>
+
+
+</head>
+<body>
+<h3>表单校验模块</h3>
+
+<form name="test">
+    <input type="text" required value="22" pattern="" data-invaildTip="校验未通过"/><span class="invaildTip">校验未通过</span>
+    <input type="text"  value="" data-invaildTip="校验未通过" pattern="^(((13[0-9]{1})|(15[0-9]{1})|(18[0-9]{1}))+\d{8})$" /><span class="invaildTip">校验未通过</span>
+    <input type="text" required pattern="" data-invaildTip="校验未通过" /><span class="invaildTip">校验未通过</span>
+</form>
+<div id="submit" >提交</div>
+
+</body>
+</html>

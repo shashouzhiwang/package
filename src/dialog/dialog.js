@@ -1,53 +1,43 @@
 /**
  * Created by Loki.Luo on 2017/3/2.
  */
-var dialog = {};
-    /**
-     * @namespace dialog.
-     * @description dialog默认参数列表
-     * @param {closeBtn} 是否包含关闭按钮
-     * @param {area} 弹窗的宽高
-     * @param {type} 动画类型
-     * @param {shade} 遮罩透明度 0-1
-     *
-     *
-     */
+!function(factory) {
+    if (typeof require === 'function' && typeof exports === 'object' && typeof module === 'object') {
+        var target = module['exports'] || exports;
+        factory(target);
+    } else if (typeof define === 'function' && define['amd']) {
+        define('dialog',['exports','layer','asynLoad'], factory);
+    } else {
+        factory(window['dialog'] = {},layer,config);
+    }
+}(function(koExports,layer,asynLoad){
+    if(layer)
+    layer.config({
+        path: '../../bower_components/layer/src/'
+    });
 
-/**
- *
- * @description dialog默认参数列表
- * @param {closeBtn} 是否包含关闭按钮
- * @param {area} 弹窗的宽高
- * @param {type} 动画类型
- * @param {shade} 遮罩透明度 0-1
- *
- *
- */
-
-(
-    function(context){
-
-    context.defConfirmOption = {
+    var dialog = typeof koExports !== 'undefined' ? koExports : {};
+    dialog.defConfirmOption = {
         closeBtn: 0,
         shadeClose: true,
         area: ['300px'],
         type: 1,
         shade:.3,
         title: false, //不显示标题
-       // content: '', //捕获的元素，注意：最好该指定的元素要存放在body最外层，否则可能被其它的相对元素所影响
+        // content: '', //捕获的元素，注意：最好该指定的元素要存放在body最外层，否则可能被其它的相对元素所影响
         cancel: function(){
             //layer.msg('捕获就是从页面已经存在的元素上，包裹layer的结构', {time: 5000, icon:6});
         }
     };
 
-    context.layerId = null;
-    context.loadingId = null;
-    context.confirmInit = function(data){
+    dialog.layerId = null;
+    dialog.loadingId = null;
+    dialog.confirmInit = function(data){
         if(data.hasOwnProperty('template')){
             if(data.template){
                 data.layer['content'] = data.template;
-                $.extend(context.defConfirmOption,data.layer);
-                context.layerId = layer.open(context.defConfirmOption);
+                $.extend(dialog.defConfirmOption,data.layer);
+                dialog.layerId = layer.open(dialog.defConfirmOption);
             }
         }
         if(data.hasOwnProperty('templateUrl')){
@@ -59,43 +49,44 @@ var dialog = {};
                         loading:false,
                         dataType:'html',
                         success:function(res){
-                            //console.log(data);
                             var content = $('<div>');
                             content.html(res);
                             content.find('.consumerModel_content').html(data.defaultContent);
+                            $(document).on('click','.consumerModel .confirm',dialog.confirmBtn);
+                            $(document).on('click','.consumerModel .cancel',dialog.cancelBtn);
                             data.layer['content'] = content.html();
-                            $.extend(context.defConfirmOption,data.layer);
-                            context.layerId = layer.open(context.defConfirmOption);
+                            $.extend(dialog.defConfirmOption,data.layer);
+                            dialog.layerId = layer.open(dialog.defConfirmOption);
                         }});
             }
         }
     };
-    context.confirmLayer = function(data){
+    dialog.confirmLayer = function(data){
         //context.confirmInit(data);
         //layer.open(context.defConfirmOption);
     };
-    context.confirm = function(data){
-        context.confirmInit(data);
+    dialog.confirm = function(data){
+        dialog.confirmInit(data);
     };
     /**
      *
      * @param data
      */
-    context.loading = function(data){
+    dialog.loading = function(data){
         data = $.extend(
             {
                 shade: [0.1,'#000']
             },data);
-        context.loadingId = layer.load(1, data);
+        dialog.loadingId = layer.load(1, data);
     };
-    context.loadingClose = function(){
-        layer.close(context.loadingId);
+    dialog.loadingClose = function(){
+        layer.close(dialog.loadingId);
     };
     /**
      *
      * @param data
      */
-    context.msg = function(data){
+    dialog.msg = function(data){
         data = $.extend(
             {
                 time:2000
@@ -105,18 +96,17 @@ var dialog = {};
         layer.msg(content,data);
     };
 
-    context.confirmBtn = function(){
-        context.defConfirmOption.comfireCb();
-        layer.close(context.layerId);
+    dialog.confirmBtn = function(){
+        layer.close(dialog.layerId);
+        dialog.defConfirmOption.comfireCb();
     };
 
-    context.cancelBtn = function(){
-        context.defConfirmOption.cancel();
-        layer.close(context.layerId);
+    dialog.cancelBtn = function(){
+        layer.close(dialog.layerId);
+        dialog.defConfirmOption.cancel();
     };
+});
 
-
-})(dialog);
 
 
 
