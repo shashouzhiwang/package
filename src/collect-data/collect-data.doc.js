@@ -15,3 +15,16 @@ function demo_collect_data(){
     var test = {};
     collect.collectData('collect',test)
 }
+// test = {
+//     test:{
+//         name :sss
+//     },
+//     collect:{
+//         name:ccc,
+//         lang:{
+//             test:vvv
+//         }
+//     }
+//
+//     }
+// }

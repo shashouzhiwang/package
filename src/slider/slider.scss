@@ -44,7 +44,7 @@
     left: 100%;
   }
 }
-.notransiton{
+.notransition{
   .slide{
     @include transition-duration(0 !important);
     @include transition-delay(0 !important);

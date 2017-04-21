@@ -18,6 +18,7 @@
 
         config.TIMEOUT=10000;
         config.DOMAIN="http://dev.gsstcloud.com:8010/hotpot/";
+        // config.DOMAIN="localhost:8080/";
 
         config.mappingUrl = 'api/bacInfo/mapping/';
 

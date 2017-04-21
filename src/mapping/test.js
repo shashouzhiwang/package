@@ -2,9 +2,10 @@
  * Created by Loki.Luo on 2017/3/31.
  */
 requirejs(['../require.config','../main'],function(requireconfig){
-    requirejs(['jquery','config','layer'],function($,config,layer){
+    requirejs(['jquery','../config','layer'],function($,config,layer){
         requirejs(['mapping'],function(mapping){
-
+// console.log($);
+//             console.log($('h3').html());
             var data = {
                 data:{
                     data:[

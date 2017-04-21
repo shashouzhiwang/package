@@ -44,6 +44,7 @@
                 getListCode:"code",
                 invaildTip:"校验未通过",
                 required:false,
+                selectItemCb:function(item){}
             };
         },
         renderDOM: function () {
@@ -51,7 +52,7 @@
             var str = "<div class='searchWarp'><div class='search_input'>" +
                 inp +
                 "</div>"+
-                "<div class='search_content'>"+
+                "<div class='search_content' style='display:none'>"+
                 "</div></div>";
             this.default.warp.html(str);
             this.$input = this.default.warp.find('input');
@@ -70,12 +71,16 @@
                 if(i>=self.data.length){
                     self.$input.val('');
                 }
-            })
+            });
             self.$input.on('focus',function(){
                 self.$input.removeClass('invaild');
                 if(self.$input.val() == self.$input.attr('data-invaildtip'))
                     self.$input.val('');
+                self.asynRequire(self.$input.val());
             });
+            $(document).on('click',function(){
+                self.default.warp.find('.search_content').css('display','none').empty();
+            })
         },
         asynRequire:function(val){
             //this.default.warp.find('.search_content').append('dasdfsa');
@@ -90,6 +95,7 @@
                     success:function(response,status){
                         self.data = response.data;
                         self.generate(response,status);
+                        if(self.default.requireParam.callBack)
                         self.default.requireParam.callBack(self.data);
                     },
                     data:data
@@ -134,13 +140,19 @@
                 tem= index==0 ? "<div class='active' data-code="+item.code+">"+ tem +"</div>":"<div data-code="+item.code+">"+ tem +"</div>";
                 temWarp += tem;
             });
-            self.default.warp.find('.search_content').html(temWarp);
+            self.default.warp.find('.search_content').css('display','inline-block').html(temWarp);
+            self.default.warp.find('.search_content').scrollTop(0);
         },
         selectList:function(){
             var self = this;
+            self.default.warp.find('.search_content').unbind("click");
             self.default.warp.find('.search_content').on('click','div',function(){
                 self.$input.val($(this).html()).attr('key',$(this).attr('data-code'));
-                self.default.warp.find('.search_content').empty();
+                self.default.warp.find('.search_content').css('display','none').empty();
+                self.default.selectItemCb({
+                    name:$(this).html(),
+                    code:$(this).attr('data-code')
+                });
             })
         },
         getCode_Name:function(item){
@@ -152,24 +164,32 @@
         useKeySelect:function(keyVal){
             var $list = this.default.warp.find('.search_content div');
             var index = $list.index(this.default.warp.find('.search_content div.active'));
+            var $divWarp = this.default.warp.find('.search_content');
             // console.log(index);
             if(keyVal == 40){
                 if(index == $list.length-1)
                     return;
                 $list.eq(index).removeClass('active');
                 $list.eq(index+1).addClass('active');
+                if((index+1)*$list.eq(index+1).height() >= $divWarp.height()){
+                    $divWarp.scrollTop( $divWarp.scrollTop() + $list.eq(index+1).height() )
+                }
+
             }
             if(keyVal == 38){
                 if(index == 0)
                     return;
                 $list.eq(index).removeClass('active');
                 $list.eq(index-1).addClass('active');
+                if((index-1)*$list.eq(index-1).height() <= $divWarp.height()){
+                    $divWarp.scrollTop( $divWarp.scrollTop() - $list.eq(index-1).height() )
+                }
             }
             if(keyVal == 13){
                 if($list.length==0)
                     return;
                 this.$input.val($list.eq(index).html()).attr('key',$list.eq(index).attr('data-code'));
-                this.default.warp.find('.search_content').empty();
+                this.default.warp.find('.search_content').css('display','none').empty();
             }
         }
     };

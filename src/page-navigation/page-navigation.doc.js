@@ -2,6 +2,7 @@
  * @description 生成页面导航条demo
  * @param {json} pageData 后台获取的页码信息  totalRows 总共条数  defaultSize  默认每页的条数   pageSize 总共页数
  * @param {string} showNum 每次可以操作页的数量
+ * @param {function} beforeCallBck 更新page之前执行，return false则不执行更新页码
  */
 
 function pageNav_demo(pageData,showNum){
@@ -18,6 +19,10 @@ function pageNav_demo(pageData,showNum){
         data:pageData,
         showNum:5, //一次显示多少个页面按钮
         style:2,  //UI风格   默认为2
+        beforeCallBack:function(index){
+            alert(index);
+            return true;
+        },
         callBack:function(index){
             alert(index);
         }

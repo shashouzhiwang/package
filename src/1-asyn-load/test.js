@@ -2,10 +2,9 @@
  * Created by Loki.Luo on 2017/3/31.
  */
 requirejs(['../require.config','../main'],function(requireconfig){
-    requirejs(['jquery','config','layer'],function($,config,layer){
-        requirejs(['asynLoad','dialog'],function(asyn,dialog){
-            // console.log(asyn);
-            asyn.ajax({
+    requirejs(['jquery','layer','../config'],function($,layer){
+        requirejs(['asynLoad'],function(asynLoad){
+            asynLoad.ajax({
                 data:{"test":'uu',para:'rr'},
                 url:'api/bacInfo/mapping/serviceStatus',
                 localUrl:'../test-data/topic-list.json',

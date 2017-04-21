@@ -8,7 +8,7 @@
     } else if (typeof define === 'function' && define['amd']) {
         define('dialog',['exports','layer','asynLoad'], factory);
     } else {
-        factory(window['dialog'] = {},layer,config);
+        factory(window['dialog'] = {},layer,asynLoad);
     }
 }(function(koExports,layer,asynLoad){
     if(layer)

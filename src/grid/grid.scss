@@ -1,0 +1,17 @@
+//@import "fun";
+//.row{
+//  @include clearfix();
+//}
+//$col-index:12;
+//
+//@for $i from 1 through length($screen){
+//  @media (min-width: nth(nth($screen,$i),2)){
+//    @for $j from 1 through $col-index{
+//      .#{nth(nth($screen,$i),1)}#{$j}{
+//        float:left;
+//        position: relative;
+//        width:($j/$col-index)*100%;
+//      }
+//    }
+//  }
+//}

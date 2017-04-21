@@ -31,7 +31,10 @@
             showNum:5,
             startPage:1,
             curPage:1,
-            style:2
+            style:2,
+            beforeCallBack:function(index){
+                return true;
+            }
         };
         this.default['endPage'] = this.default.showNum;
         this.default = $.extend(this.default,data);
@@ -85,6 +88,8 @@
                 }else{
                     if(parseInt($(this).find('a').html()) == self.default.curPage)
                         return;
+                    if(!self.default.beforeCallBack($(this).find('a').html()))
+                        return;
                     self.indexPage($(this).find('a').html());
                 }
             }
@@ -98,6 +103,10 @@
                 self.$input.blur();
                 if(val == self.default.curPage || val > self.default.data.pageSize || val < 1)
                     return;
+                if(!self.default.beforeCallBack(self.default.curPage))  {
+                    $(this).val(self.default.curPage);
+                    return;
+                }
                 self.indexPage(val);
             }
         })
@@ -120,12 +129,16 @@
         if(this.default.curPage<=1){
             return;
         }
+        if(!this.default.beforeCallBack(this.default.curPage))
+            return;
         this.indexPage(parseInt(this.default.curPage)-1);
     },
     nextPage:function(){
         if(this.default.curPage>=this.default.data.pageSize){
             return;
         }
+        if(!this.default.beforeCallBack(this.default.curPage))
+            return;
         this.indexPage(parseInt(this.default.curPage)+1);
     },
     indexPage:function(num){

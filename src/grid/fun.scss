@@ -1,0 +1,33 @@
+@import "variable";
+
+@mixin clearfix() {
+  &:before,
+  &:after {
+    content: " "; // 1
+    display: table; // 2
+  }
+  &:after {
+    clear: both;
+  }
+}
+
+//
+//@mixin make-grid-columns($index){
+//
+//}
+//
+//@mixin screen-lg($index){
+//
+//}
+//
+//@mixin screen-md($index){
+//
+//}
+//
+//@mixin screen-sm($index){
+//
+//}
+//
+//@mixin screen-xm($index){
+//
+//}

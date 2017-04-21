@@ -4,13 +4,6 @@
     <title>package</title>
     <link rel="stylesheet" href="skin/default/font/iconfont.css">
     <link rel="stylesheet" href="main/main.min.css">
-    <style>input{width:50px;}
-    .search_content .active{
-        background: red;
-    }
-
-
-    </style>
 </head>
 <body>
 <h1>package</h1>
@@ -50,7 +43,7 @@
 
 <!--<script src="../bower_components/jquery.event.move/js/jquery.event.move.js"></script>-->
 <!--<script src="../bower_components/jquery.event.swipe/js/jquery.event.swipe.js"></script>-->
-<!--<script src="../config.js"></script>-->
+<script src="config.js"></script>
 <script src="main/main.min.js"></script>
 <script>
     var pageData = {
@@ -88,19 +81,19 @@ function submit(){
 //    page.default.data.pageSize = 10;
 }
 
-//    dialog.confirm({
-////        template:"<div>eeeeee</div>",
-//        defaultContent:"rrrrrrrrrr",
-//        templateUrl:"./dialog/dialog.html",
-//        layer:{
-//            comfireCb:function(){
-//                alert('comfireCb');
-//            },
-//            cancel:function(){
-//                alert('cancelCb');
-//            }
-//        }
-//    });
+    dialog.confirm({
+//        template:"<div>eeeeee</div>",
+        defaultContent:"rrrrrrrrrr",
+        templateUrl:"./dialog/dialog.html",
+        layer:{
+            comfireCb:function(){
+                alert('comfireCb');
+            },
+            cancel:function(){
+                alert('cancelCb');
+            }
+        }
+    });
 
 //consumerModel.msg({
 //    content:'加载中..',
@@ -210,6 +203,34 @@ var data = {
             url:'api/bacInfo/mapping/serviceStatus',
             localUrl:'../test-data/topic-list.json',
             loading:false
+        },
+        selectItemCb:function(item){
+            alert(JSON.stringify(item));
+        }
+    });
+
+    asynLoad.ajax({
+        data:{"test":'uu',para:'rr'},
+        url:'api/bacInfo/mapping/serviceStatus',
+        localUrl:'../test-data/topic-list.json',
+        success:function(data, status, requestCode)
+        {
+//            alert();
+            data.data = {
+                time:1488525824,
+                currency:"22",
+                data:{
+                    lang:"中文",
+                    time:{
+                        test:"ceshi"
+                    },
+                    test:"测试"
+                }
+            };
+            // format.binding(data.data);
+        },
+        error:function(){
+
         }
     });
 

@@ -18,7 +18,6 @@
         factory(window['asynLoad'] = {},layer,config);
     }
 }(function(koExports,layer,config){
-    console.log(config,22);
     if(layer)
     layer.config({
         path: '../../bower_components/layer/src/'

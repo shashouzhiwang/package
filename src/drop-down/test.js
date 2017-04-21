@@ -2,7 +2,7 @@
  * Created by Loki.Luo on 2017/3/31.
  */
 requirejs(['../require.config','../main'],function(requireconfig){
-    requirejs(['jquery','config','layer'],function($,config,layer){
+    requirejs(['jquery','layer','../config'],function($,layer){
         requirejs(['dropDown'],function(dropDown){
            new dropDown.init({
                warp:$('#search'),
@@ -19,6 +19,9 @@ requirejs(['../require.config','../main'],function(requireconfig){
                    callBack:function(data){
                        alert(data);
                    }
+               },
+               selectItemCb:function(item){
+                   alert(JSON.stringify(item));
                }
            });
 
