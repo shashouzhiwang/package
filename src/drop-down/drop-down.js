@@ -30,7 +30,7 @@
     tem.prototype = dropDown.prototype = {
         init:function (data) {
             var self = this;
-            console.log(dropDown);
+            // console.log(dropDown);
             this.construct();
             self.default = $.extend(self.default,data);
             this.renderDOM();
@@ -72,11 +72,18 @@
                     self.$input.val('');
                 }
             });
-            self.$input.on('focus',function(){
+            self.$input.on('focus',function(event){
                 self.$input.removeClass('invaild');
                 if(self.$input.val() == self.$input.attr('data-invaildtip'))
                     self.$input.val('');
                 self.asynRequire(self.$input.val());
+                event.stopPropagation();
+                event.preventDefault();
+            });
+            self.$input.on('click',function(event){
+                $(".search_content").not(self.default.warp.find('.search_content')).css('display','none').empty();
+                event.stopPropagation();
+                event.preventDefault();
             });
             $(document).on('click',function(){
                 self.default.warp.find('.search_content').css('display','none').empty();

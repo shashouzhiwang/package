@@ -13,12 +13,15 @@
 }(function(koExports) {
     var config = typeof koExports !== 'undefined' ? koExports : {};
 
-        config.TEST=false;
-        config.REQUIRT_STYLE="POST";
+        // config.TEST=false;
+        // config.REQUIRT_STYLE="POST";
+
+        config.TEST=true;
+        config.REQUIRT_STYLE="GET";
 
         config.TIMEOUT=10000;
-        config.DOMAIN="http://dev.gsstcloud.com:8010/hotpot/";
-        // config.DOMAIN="localhost:8080/";
+        // config.DOMAIN="http://dev.gsstcloud.com:8010/hotpot/";
+        config.DOMAIN="localhost:8087/";
 
         config.mappingUrl = 'api/bacInfo/mapping/';
 
