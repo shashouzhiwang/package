@@ -19,6 +19,8 @@
                 {
                     if($(this).is("input") && ($(this).attr('type') == "checkbox" || $(this).attr('type') == 'radio')){
                         var val = $(this).is(':checked');
+                    }else{
+                        var val = $(this).val();
                     }
                 }
                 else
