@@ -7,6 +7,7 @@ requirejs(['../require.config','../main'],function(requireconfig){
 
             var data = {
                 time:1488525824,
+                checkbox:1,
                 currency:"22",
                 data:{
                     lang:"中文",
@@ -17,6 +18,11 @@ requirejs(['../require.config','../main'],function(requireconfig){
                 }
             };
             format.binding(data);
+
+            $('#test').on("click",function(){
+                alert($('#radio').is(':checked'));
+                alert($('#checkbox').is(':checked'));
+            })
 
         })
     })

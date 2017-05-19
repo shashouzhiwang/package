@@ -98,8 +98,26 @@
             }
         }
         format.transfromPrefix = null;
-        if(format.curVal)
-            _this.html(format.curVal);
+        // if($(this).is("input")||$(this).is("textarea"))
+        if(format.curVal){
+            if(_this.is("input")||_this.is("textarea")){
+                if(_this.is("input") && (_this.attr('type') == "checkbox" || _this.attr('type') == 'radio')){
+                    if(format.curVal){
+                        _this.attr('checked',true);
+                    }else{
+                        _this.attr('checked',false);
+                    }
+                }else{
+                    _this.val(format.curVal);
+                }
+            }else{
+                if(_this.is("img")){
+                    _this.attr('src',format.curVal);
+                }else{
+                    _this.html(format.curVal);
+                }
+            }
+        }
 
     };
 

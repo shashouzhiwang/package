@@ -17,11 +17,17 @@
                 var attr = $(this).attr(name).split('.');
                 if($(this).is("input")||$(this).is("textarea"))
                 {
-                    var val = $(this).val();
+                    if($(this).is("input") && ($(this).attr('type') == "checkbox" || $(this).attr('type') == 'radio')){
+                        var val = $(this).is(':checked');
+                    }
                 }
                 else
                 {
-                    var val = $(this).html();
+                    if($(this).is("img")){
+                        var val = $(this).attr('src');
+                    }else{
+                        var val = $(this).html();
+                    }
                 }
                 collect.recursive(json,attr,val);
             });
